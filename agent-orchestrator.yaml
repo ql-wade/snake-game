@@ -1,0 +1,77 @@
+# Agent Orchestrator 配置 - 贪吃蛇游戏
+# 多Agent并行开发 Demo
+
+dataDir: ~/.agent-orchestrator
+worktreeDir: ~/.worktrees
+
+defaults:
+  runtime: tmux
+  agent: claude-code
+  workspace: worktree
+  notifiers: [desktop]
+
+agents:
+  claude-code:
+    command: claude
+    description: "推理最强，核心逻辑开发"
+    
+  opencode:
+    command: opencode
+    description: "本地化，渲染和集成开发"
+
+projects:
+  snake-game:
+    name: Snake Game (Multi-Agent Demo)
+    repo: ql-wade/snake-game
+    path: ~/code/snake-game
+    defaultBranch: main
+    sessionPrefix: snake
+    
+    # 桥接层文件 - Agent启动时自动读取
+    agentRulesFile: .trinity-context.md
+    
+    agentRules: |
+      ## 贪吃蛇游戏开发指南
+      
+      ### 技术栈
+      - TypeScript + Vite
+      - HTML Canvas
+      - 纯前端，无后端
+      
+      ### 模块边界
+      - core/: 游戏核心逻辑 (Snake, Food, Game)
+      - renderer/: Canvas渲染
+      - input/: 键盘输入处理
+      
+      ### 接口契约
+      参考 src/core/types.ts 中的类型定义
+      
+      ### 代码规范
+      - 使用 TypeScript strict 模式
+      - 每个类单独一个文件
+      - 函数和变量使用 camelCase
+      - 类和接口使用 PascalCase
+      
+      ### Trinity Skills
+      使用 /trinity:new 创建变更
+      使用 /trinity:apply 执行任务
+      使用 /trinity:verify 验证实现
+
+reactions:
+  ci-failed:
+    auto: true
+    action: send-to-agent
+    retries: 2
+    message: |
+      CI 失败。按照 3-Strike 协议处理：
+      - Attempt 1: 诊断并修复，记录到 progress.md
+      - Attempt 2: 尝试替代方案，记录到 findings.md
+      - Attempt 3: 重新思考，记录到 findings.md
+      使用 superpowers:systematic-debugging 找根因。
+      
+  review-requested:
+    auto: true
+    action: send-to-agent
+    message: |
+      Review 请求变更。使用 superpowers:receiving-code-review 处理反馈。
+      每个修改都要更新 findings.md 记录决策。
