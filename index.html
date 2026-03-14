@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snake Game - 贪吃蛇</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background-color: #1a1a2e;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #eee;
+      }
+      h1 {
+        margin-bottom: 20px;
+        font-size: 2rem;
+      }
+      #game-container {
+        position: relative;
+      }
+      #game-canvas {
+        border: 2px solid #4a4a6a;
+        background-color: #16213e;
+      }
+      #score {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 1.2rem;
+        color: #eee;
+      }
+      #game-over {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.5rem;
+        color: #e94560;
+        display: none;
+      }
+      #controls {
+        margin-top: 20px;
+        text-align: center;
+        color: #888;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Snake Game</h1>
+    <div id="game-container">
+      <canvas id="game-canvas" width="400" height="400"></canvas>
+      <div id="score">分数: 0</div>
+      <div id="game-over">游戏结束!</div>
+    </div>
+    <div id="controls">
+      <p>使用方向键或 WASD 控制移动</p>
+      <p>按空格键暂停/继续</p>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
